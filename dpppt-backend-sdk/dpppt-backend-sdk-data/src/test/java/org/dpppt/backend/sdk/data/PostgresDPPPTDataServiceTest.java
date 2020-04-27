@@ -1,6 +1,5 @@
 package org.dpppt.backend.sdk.data;
 
-import com.sun.jna.platform.win32.WinReg;
 import org.assertj.core.api.Assertions;
 import org.dpppt.backend.sdk.data.config.DPPPTDataServiceConfig;
 import org.dpppt.backend.sdk.data.config.FlyWayConfig;
