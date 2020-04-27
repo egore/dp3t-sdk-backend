@@ -30,7 +30,7 @@ public class SignatureResponseWrapperTest {
     private MockHttpServletResponse response;
 
     @Test
-    public void testSignaturResponseWrapper() throws IOException, NoSuchAlgorithmException {
+    public void testSignatureResponseWrapper() throws IOException, NoSuchAlgorithmException {
 
         response = new MockHttpServletResponse();
         KeyPair keyPair = Keys.keyPairFor(SignatureAlgorithm.ES256);
