@@ -45,6 +45,7 @@ public class SignatureResponseWrapperTest {
         assertEquals(expected, digest);
         JwtParser jwtParser = Jwts.parserBuilder().setSigningKey(keyPair.getPublic()).build();
         Jwt jwt = jwtParser.parse(rawJWT);
+        assertNotNull(jwt);
         assertThrows(SignatureException.class, () -> {
             Jwts.parserBuilder().setSigningKey(wrongKey.getPublic()).build().parse(rawJWT);
         });
