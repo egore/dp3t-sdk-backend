@@ -74,7 +74,7 @@ public abstract class BaseControllerTest {
 		String key = IOUtils.toString(inputStream);
 		PKCS8EncodedKeySpec keySpecX509 = new PKCS8EncodedKeySpec(Base64.getDecoder().decode(key));
 		KeyFactory kf = KeyFactory.getInstance("RSA");
-		privateKey = (PrivateKey) kf.generatePrivate(keySpecX509);
+		privateKey = kf.generatePrivate(keySpecX509);
 	}
 
 	protected String json(Object o) throws IOException {
@@ -90,13 +90,13 @@ public abstract class BaseControllerTest {
 		claims.put("onset", "2020-04-20");
 		return Jwts.builder().setClaims(claims).setId(UUID.randomUUID().toString())
 				.setSubject("test-subject" + DateTime.now().toString()).setExpiration(expiresAt.toDate())
-				.setIssuedAt(DateTime.now().toDate()).signWith(SignatureAlgorithm.RS256, (Key) privateKey).compact();
+				.setIssuedAt(DateTime.now().toDate()).signWith(privateKey, SignatureAlgorithm.RS256).compact();
 	}
 
 	protected String createToken(String subject, DateTime expiresAt) {
 		Claims claims = Jwts.claims();
 		claims.put("scope", "exposed");
 		return Jwts.builder().setSubject(subject).setExpiration(expiresAt.toDate()).setClaims(claims)
-				.setId(UUID.randomUUID().toString()).signWith(SignatureAlgorithm.RS256, (Key) privateKey).compact();
+				.setId(UUID.randomUUID().toString()).signWith(privateKey, SignatureAlgorithm.RS256).compact();
 	}
 }
