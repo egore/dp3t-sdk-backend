@@ -50,6 +50,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.protobuf.ByteString;
 
+import static org.dpppt.backend.sdk.ws.util.ByteArrayHelper.bytesToHex;
+
 @Controller
 @RequestMapping("/v1")
 public class DPPPTController {
@@ -119,17 +121,6 @@ public class DPPPTController {
 		byte[] hash = digest.digest(jacksonObjectMapper.writeValueAsString(overview).getBytes());
 
 		return ResponseEntity.ok().header("JSON-Sha256-Hash", bytesToHex(hash)).body(overview);
-	}
-
-	private static String bytesToHex(byte[] hash) {
-		StringBuffer hexString = new StringBuffer();
-		for (int i = 0; i < hash.length; i++) {
-			String hex = Integer.toHexString(0xff & hash[i]);
-			if (hex.length() == 1)
-				hexString.append('0');
-			hexString.append(hex);
-		}
-		return hexString.toString();
 	}
 
 	@CrossOrigin(origins = { "https://editor.swagger.io" })
